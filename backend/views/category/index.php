@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CategorySearch */
@@ -23,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data-target' => '#operate-modal', // 等于modal begin中设定的参数id值
         ]) ?>
     </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -66,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
-use yii\helpers\Url;
+
 // 异步请求的地址
 $requestCreateUrl = Url::toRoute('create');
 $js = <<<JS
@@ -108,3 +110,5 @@ Modal::begin([
 Modal::end();
 
 ?>
+
+

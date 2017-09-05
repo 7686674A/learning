@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -122,5 +122,14 @@ class CategoryController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    // @see http://www.manks.top/yii2_modal_activeform_ajax.html
+    // 看主要的验证操作，该操作是表单字段失去焦点时异步验证，同时如果直接提交表单，也会先执行该操作进行验证
+    public function actionValidateForm () {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = new Category();   //这里要替换成自己的模型类
+        $model->load(Yii::$app->request->post());
+        return \yii\widgets\ActiveForm::validate($model);
     }
 }
