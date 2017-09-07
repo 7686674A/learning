@@ -15,6 +15,13 @@ return [
         'admin' => [
             'class' => 'mdm\admin\Module',
         ],
+        'redactor' => [
+            'class' => 'backend\components\RedactorModule',
+            'uploadDir' => './uploads',  // 比如这里可以填写 ./uploads   文件保存目录
+            'uploadUrl' => './uploads',
+            'imageAllowExtensions'=>['jpg','png','gif']
+        ],
+
     ],
     'aliases' => [
         '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',
@@ -65,7 +72,22 @@ return [
             'class' => 'yii\rbac\DbManager',
             'defaultRoles' => ['guest'],
         ],
+        // 主题
+        /*'view' => [
+            'theme' => [
+                // 'basePath' => '@app/themes/spring',
+                // 'baseUrl' => '@web/themes/spring',
+                'pathMap' => [
+                    // 将app/view替换为app/themes/spring
+                    '@app/views' => [
+                        '@app/themes/christmas',
+                        '@app/themes/spring',
+                    ]
+                ],
+            ],
+        ],*/
     ],
+    // 权限
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
@@ -75,6 +97,10 @@ return [
 //            'gii/*',
             '*',
         ]
+    ],
+    // 主题
+    'as theme' => [
+        'class' => 'backend\components\ThemeController',
     ],
     // 加载自定义的行为类
 //    'as myBehavior2' => \backend\components\MyBehavior::className(),

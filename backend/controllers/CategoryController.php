@@ -35,6 +35,7 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
+//        Yii::$app->helper->p(Yii::$app->request->queryParams);die;
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
