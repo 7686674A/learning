@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Blog */
@@ -11,8 +12,6 @@ use yii\widgets\ActiveForm;
 <div class="blog-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'id')->textInput() ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -31,9 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_delete')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'category')->label('栏目')->checkboxList(Category::dropDownList())?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

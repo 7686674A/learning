@@ -52,14 +52,21 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
+            // 是否开启美化效果
+            // false：/index.php?r=blog%2Findex
+            // true：/index.php/blog/index
             'enablePrettyUrl' => true,
+            // 是否或略脚本名index.php
             'showScriptName' => false,
+            // 是否开启严格解析路由
+            'enableStrictParsing' => false,
+            'suffix' => '',
             'rules' => [
+                '/blogs/<id:\d+>' => '/blog/view',
+                "<controller:\w+>/<action:\w+>"=>"<controller>/<action>",
             ],
         ],
-        */
         'assetManager' => [
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [

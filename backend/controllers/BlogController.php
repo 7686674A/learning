@@ -8,6 +8,8 @@ use common\models\BlogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\BlogCategory;
+use yii\base\Exception;
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -84,9 +86,44 @@ class BlogController extends Controller
     {
         $model = new Blog();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // 注意这里调用的是validate，非save,save我们放在了事务中处理了
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // 开启事务
+            $transaction = Yii::$app->db->beginTransaction();
+            try{
+                $model->save(false);
+                // 我们这里是获取刚刚插入blog表的id
+                $blogId = $model->id;
+                /**
+                 * batch insert category
+                 * 我们在Blog模型中设置过category字段的验证方式是required,因此下面foreach使用之前无需再做判断
+                 */
+                $data = [];
+                foreach ($model->category as $k => $v){
+                    // 注意这里的数组形式[blog_id, category_id]，一定要跟下面batchInsert方法的第二个参数保持一致
+                    $data[] = [$blogId,$v];
+                }
+                // 获取BlogCategory模型的所有属性和表名
+                $blogCategory = new BlogCategory;
+                $attribute = ['blog_id','category_id'];
+                $tableName = $blogCategory::tableName();
+                $db = BlogCategory::getDb();
+                // 批量插入栏目到BlogCategory::tableName表
+                $db->createCommand()->batchInsert(
+                    $tableName,
+                    $attribute,
+                    $data
+                )->execute();
+                // 提交
+                $transaction->commit();
+                return $this->redirect(['index']);
+            }catch(\Exception $e){
+                // 回滚
+                $transaction->rollBack();
+                throw $e;
+            }
         } else {
+//            yii::$app->helper->p($model->errors);die;
             return $this->render('create', [
                 'model' => $model,
             ]);

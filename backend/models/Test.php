@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $date
  */
 class Test extends \yii\db\ActiveRecord
 {
@@ -27,6 +28,7 @@ class Test extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['date'], 'safe'],
             [['name'], 'string', 'max' => 30],
         ];
     }
@@ -39,6 +41,7 @@ class Test extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'date' => 'Date',
         ];
     }
 }

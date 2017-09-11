@@ -19,7 +19,7 @@ class TestSearch extends Test
     {
         return [
             [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'date'], 'safe'],
         ];
     }
 
@@ -60,6 +60,7 @@ class TestSearch extends Test
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'date' => $this->date,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
