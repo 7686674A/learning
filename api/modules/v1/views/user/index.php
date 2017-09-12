@@ -1,25 +1,23 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\BlogSearch */
+/* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-//backend\assets\TestAsset::register($this);
-$this->title = 'Blogs';
+
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="blog-index">
+<div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Blog', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <a href="<?=Url::toRoute(['update','id'=>3])?>" class="btn btn-link">修改</a>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -27,12 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'title',
-            'content:ntext',
-            'views',
-            'is_delete',
+            'username',
+            'auth_key',
+            'password_hash',
+            'password_reset_token',
+            // 'email:email',
+            // 'status',
             // 'created_at',
             // 'updated_at',
+            // 'api_token',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

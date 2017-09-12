@@ -5,18 +5,22 @@
  * Date: 2017/9/8
  * Time: 16:24
  */
-namespace console\controller;
+namespace console\controllers;
 
 use Yii;
 use yii\console\Controller;
 
 /**
- * Test console Application
+ * Test Console Application
  */
 class TestController extends Controller
 {
-    public function actionIndex()
+
+    public function actionIndex ($name,$age)
     {
-        echo "This is my first console application.";
+        echo "name is {$name}\n";
+        echo "age is {$age}\n";
+        return self::EXIT_CODE_NORMAL;
     }
+
 }
