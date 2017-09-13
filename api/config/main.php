@@ -17,6 +17,27 @@ return [
         ],
     ],
     'components' => [
+        'response'=>[
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                // 状态码 比如404,200
+                $code = $response->getStatusCode();
+                // 信息
+                $msg = $response->statusText;
+                if ($code == 404) {
+                    !empty($response->data['message']) && $msg = $response->data['message'];
+                }
+                $data = [
+                    'code' => $code,
+                    'msg' => $msg,
+                ];
+                $code == 200 && $data['data'] = $response->data;
+                $response->data = $data;
+                // 响应格式为json
+                $response->format = yii\web\Response::FORMAT_JSON;
+            },
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

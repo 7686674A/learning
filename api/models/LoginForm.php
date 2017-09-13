@@ -112,4 +112,14 @@ class LoginForm extends Model
             $this->_user->save();
         }
     }
+
+    public function afterValidate ()
+    {
+        if ($this->hasErrors()) {
+            $errors = $this->errors;
+            $errors = current($errors);
+            throw new \yii\web\NotFoundHttpException($errors[0], 1);
+        }
+        return true;
+    }
 }

@@ -28,7 +28,8 @@ class UserController extends Controller
                 'class' => HttpBearerAuth::className(),
                 'optional' => [
                     'login',
-                    'signup-test'
+                    'signup-test',
+                    'user-profile'
                 ],
             ]
         ]);
@@ -148,11 +149,26 @@ class UserController extends Controller
     {
         $model = new LoginForm();
         $model->setAttributes(Yii::$app->request->post());
-//return Yii::$app->request->post();
+
         if ($user = $model->login()){
             return $user->api_token;
         }else{
             return $model->errors;
         }
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function actionUserProfile ()
+    {
+        // 到这一步，token都认为是有效的了
+        // 下面只需要实现业务逻辑即可
+        $user = $this->authenticate(Yii::$app->user, Yii::$app->request, Yii::$app->response);
+        return [
+            'id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
+        ];
     }
 }
