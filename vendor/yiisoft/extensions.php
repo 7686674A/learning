@@ -111,4 +111,13 @@ return array (
       '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
     ),
   ),
+  'bailangzhan/yii2-webuploader' => 
+  array (
+    'name' => 'bailangzhan/yii2-webuploader',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@manks' => $vendorDir . '/bailangzhan/yii2-webuploader',
+    ),
+  ),
 );

@@ -26,6 +26,9 @@ use backend\models\Category;
         ]
     ]) ?>
 
+    <?= $form->field($model, 'file')->widget('manks\FileInput', [
+    ]); ?>
+
     <?= $form->field($model, 'views')->textInput() ?>
 
     <?= $form->field($model, 'is_delete')->textInput() ?>

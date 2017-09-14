@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\BlogCategory;
 use yii\base\Exception;
+use common\components\Upload;
+use yii\web\Response;
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -24,9 +26,10 @@ class BlogController extends Controller
         return [
             // 附加行为
 //            'myBehavior' => \backend\components\MyBehavior::className(),
-            'as access' => [
+            // 权限
+            /*'as access' => [
                 'class' => 'backend\components\AccessControl',
-            ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,9 +55,9 @@ class BlogController extends Controller
         var_dump($isGuest);*/
 
         // 判断权限
-        if (!Yii::$app->user->can('/blog/index')) {
+        /*if (!Yii::$app->user->can('/blog/index')) {
             throw new \yii\web\ForbiddenHttpException("没权限访问.");
-        }
+        }*/
 
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -175,6 +178,24 @@ class BlogController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionUploads()
+    {
+        try{
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new Upload();
+            $info = $model->upImage();
+
+            if ($info && is_array($info)){
+                return $info;
+            }else{
+                return ['code'=>1, 'msg'=>'error'];
+            }
+        }catch(\Exception $e){
+            return ['code'=>1, 'msg'=> $e->getMessage()];
         }
     }
 }

@@ -37,6 +37,7 @@ class ComposerStaticInit7e2bca6a7ad2fb4481bca401a2f2aefe
         'm' => 
         array (
             'mdm\\admin\\' => 10,
+            'manks\\' => 6,
         ),
         'k' => 
         array (
@@ -139,6 +140,10 @@ class ComposerStaticInit7e2bca6a7ad2fb4481bca401a2f2aefe
         'mdm\\admin\\' => 
         array (
             0 => __DIR__ . '/..' . '/mdmsoft/yii2-admin',
+        ),
+        'manks\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bailangzhan/yii2-webuploader',
         ),
         'kartik\\datetime\\' => 
         array (
