@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Category;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Blog */
@@ -27,6 +28,18 @@ use backend\models\Category;
     ]) ?>
 
     <?= $form->field($model, 'file')->widget('manks\FileInput', [
+    ]); ?>
+
+    <?= $form->field($model, 'file2')->widget('manks\FileInput', [
+        'clientOptions' => [
+            'pick' => [
+                'multiple' => true,
+            ],
+            /*'server' => Url::to('upload/u2'),
+            'accept' => [
+                'extensions' => 'png',
+            ],*/
+        ],
     ]); ?>
 
     <?= $form->field($model, 'views')->textInput() ?>

@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "blog".
@@ -15,6 +14,8 @@ use yii\helpers\ArrayHelper;
  * @property integer $is_delete
  * @property string $created_at
  * @property string $updated_at
+ * @property string $file
+ * @property string $file2
  */
 class Blog extends \yii\db\ActiveRecord
 {
@@ -47,6 +48,9 @@ class Blog extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
             [['title', 'content', 'category'], 'required'],
+            [['file', 'file2'], 'required'],
+            [['file', 'file2'], 'safe'],
+            [['file'], 'string', 'max' => 255],
         ];
     }
 
@@ -57,12 +61,14 @@ class Blog extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
-            'views' => 'Views',
-            'is_delete' => 'Is Delete',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'title' => '标题',
+            'content' => '文章内容',
+            'views' => '点击量',
+            'is_delete' => '是否删除',
+            'created_at' => '添加时间',
+            'updated_at' => '更新时间',
+            'file' => '单图',
+            'file2' => '多图',
         ];
     }
 

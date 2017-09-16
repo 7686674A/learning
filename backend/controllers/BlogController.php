@@ -94,7 +94,14 @@ class BlogController extends Controller
             // 开启事务
             $transaction = Yii::$app->db->beginTransaction();
             try{
+                // 多图上传之后的保存
+                if (is_array($model->file2) && !empty($model->file2)){
+                    $file2 = implode(',',$model->file2);
+                    $model->file2 = $file2;
+                }
+
                 $model->save(false);
+
                 // 我们这里是获取刚刚插入blog表的id
                 $blogId = $model->id;
                 /**
@@ -126,7 +133,7 @@ class BlogController extends Controller
                 throw $e;
             }
         } else {
-//            yii::$app->helper->p($model->errors);die;
+            // yii::$app->helper->p($model);die;
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -143,8 +150,18 @@ class BlogController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            // 多图上传之后的保存
+            if (is_array($model->file2) && !empty($model->file2)){
+                $file2 = implode(',',$model->file2);
+                $model->file2 = $file2;
+            }
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                return $model->errors;
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

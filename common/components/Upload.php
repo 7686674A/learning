@@ -45,12 +45,14 @@ class Upload extends Model
         if ($model->validate()) {
             $relativePath = Yii::$app->params['imageUploadRelativePath'];
             $successPath = Yii::$app->params['imageUploadSuccessPath'];
-            $fileName = $model->file->baseName . '.' . $model->file->extension;
+            $fileName = Yii::$app->helper->file_rename() .'.'. $model->file->extension;
+            //$rootpath 项目的根目录
+            $rootpath = str_replace('\\','/',Yii::$app->basePath).'/../';
             if (!is_dir($relativePath)) {
                 FileHelper::createDirectory($relativePath);
             }
 
-//            $model->file->saveAs($relativePath . $fileName);
+            $model->file->saveAs($rootpath.$relativePath . $fileName);
 
             return [
                 'code' => 0,
